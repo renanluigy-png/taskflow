@@ -1,18 +1,18 @@
-const input = document.getElementById("taskInput");
-const button = document.getElementById("addBtn");
-const list = document.getElementById("taskList");
+const taskInput = document.getElementById("taskInput");
+const addBtn = document.getElementById("addBtn");
+const taskList = document.getElementById("taskList");
 
-button.addEventListener("click", () => {
-    const text = input.value.trim();
+addBtn.addEventListener("click", () => {
+    const taskText = taskInput.value.trim();
 
-    if (text === "") {
-        alert("Digite uma tarefa");
+    if (taskText === "") {
+        alert("Digite uma tarefa!");
         return;
     }
 
     const li = document.createElement("li");
-    li.textContent = text;
+    li.textContent = taskText;
 
-    list.appendChild(li);
-    input.value = "";
+    taskList.appendChild(li);
+    taskInput.value = "";
 });
