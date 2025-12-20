@@ -1,25 +1,51 @@
 const taskInput = document.getElementById("taskInput");
 const prioritySelect = document.getElementById("priority");
 const taskList = document.getElementById("taskList");
+const addBtn = document.getElementById("addBtn");
 
+// carregar do localStorage
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-// Carregar tarefas salvas
-function loadTasks() {
+// salvar no localStorage
+function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+// renderizar tarefas
+function renderTasks() {
     taskList.innerHTML = "";
+
     tasks.forEach((task, index) => {
-        createTaskElement(task.text, task.priority, index);
+        const li = document.createElement("li");
+        li.className = "task-item";
+
+        const textSpan = document.createElement("span");
+        textSpan.textContent = task.text;
+
+        const prioritySpan = document.createElement("span");
+        prioritySpan.textContent = task.priority;
+        prioritySpan.className = `priority ${task.priority}`;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "✖";
+        removeBtn.addEventListener("click", () => removeTask(index));
+
+        li.appendChild(textSpan);
+        li.appendChild(prioritySpan);
+        li.appendChild(removeBtn);
+
+        taskList.appendChild(li);
     });
 }
 
-// Adicionar tarefa
+// adicionar tarefa
 function addTask() {
     const text = taskInput.value.trim();
     const priority = prioritySelect.value;
 
     if (text === "") return;
 
-    // impedir duplicadas
+    // bloquear duplicadas
     const exists = tasks.some(task => task.text === text);
     if (exists) {
         alert("Essa tarefa já existe!");
@@ -28,51 +54,27 @@ function addTask() {
 
     tasks.push({ text, priority });
     saveTasks();
-    loadTasks();
+    renderTasks();
 
     taskInput.value = "";
 }
 
-// Criar elemento da tarefa
-function createTaskElement(text, priority, index) {
-    const li = document.createElement("li");
-    li.className = "task-item";
-
-    const spanText = document.createElement("span");
-    spanText.textContent = text;
-
-    const spanPriority = document.createElement("span");
-    spanPriority.textContent = priority;
-    spanPriority.className = `priority ${priority.toLowerCase()}`;
-
-    const removeBtn = document.createElement("button");
-    removeBtn.textContent = "✖";
-    removeBtn.onclick = () => removeTask(index);
-
-    li.appendChild(spanText);
-    li.appendChild(spanPriority);
-    li.appendChild(removeBtn);
-
-    taskList.appendChild(li);
-}
-
-// Remover tarefa
+// remover tarefa
 function removeTask(index) {
     tasks.splice(index, 1);
     saveTasks();
-    loadTasks();
+    renderTasks();
 }
 
-// Salvar no localStorage
-function saveTasks() {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-}
+// eventos
+addBtn.addEventListener("click", addTask);
 
-// Enter adiciona tarefa
-taskInput.addEventListener("keypress", function (e) {
+taskInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         addTask();
     }
 });
 
-loadTasks();
+// inicialização
+renderTasks();
+
