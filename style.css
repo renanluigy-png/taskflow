@@ -1,0 +1,101 @@
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background: #1e1e1e;
+  width: 360px;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #4cafef;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+}
+
+button {
+  background: #4cafef;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+ul {
+  padding: 0;
+  margin-top: 20px;
+}
+
+li {
+  background: #2a2a2a;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #f1f1f1;
+}
+
+.task-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-text {
+  flex: 1;
+}
+
+.priority {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.priority.alta { background: #ff5252; }
+.priority.media { background: #ffca28; color: #000; }
+.priority.baixa { background: #4caf50; }
+
+small {
+  color: #ccc;
+  font-size: 12px;
+}
+
+.delete {
+  background: none;
+  border: none;
+  color: #ff5c5c;
+  font-size: 18px;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+/* RESPONSIVO */
+@media (max-width: 480px) {
+  .container {
+    width: 90%;
+  }
+}
+
