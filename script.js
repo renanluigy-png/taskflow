@@ -1,85 +1,94 @@
-const taskList = document.getElementById("taskList");
-const taskInput = document.getElementById("taskInput");
-const priority = document.getElementById("priority");
-const dueDate = document.getElementById("dueDate");
-const filter = document.getElementById("filter");
+let tasks = [];
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-loadTasks();
+// carregar ao iniciar
+loadTasksFromStorage();
+renderTasks();
 
 function addTask() {
-  if (!taskInput.value.trim()) return;
+  const text = taskInput.value;
+  const priority = document.getElementById("priority").value;
+  const dueDate = document.getElementById("dueDate").value;
+
+  if (text.trim() === "") return;
 
   tasks.push({
-    text: taskInput.value,
-    priority: priority.value,
-    date: dueDate.value,
+    text,
+    priority,
+    dueDate,
     done: false
   });
 
   taskInput.value = "";
-  save();
+  dueDate.value = "";
+
+  saveTasks();
+  renderTasks();
 }
 
-function toggleTask(index) {
-  tasks[index].done = !tasks[index].done;
-  save();
-}
-
-function deleteTask(index) {
-  tasks.splice(index, 1);
-  save();
-}
-
-function save() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  loadTasks();
-}
-
-function loadTasks() {
+function renderTasks() {
   taskList.innerHTML = "";
 
-  let filtered = tasks;
-
-  if (filter.value === "pending") {
-    filtered = tasks.filter(t => !t.done);
-  }
-  if (filter.value === "done") {
-    filtered = tasks.filter(t => t.done);
-  }
-
-  filtered.forEach((task, index) => {
+  tasks.forEach((task, index) => {
     const li = document.createElement("li");
+
+    const priorityClass =
+      task.priority === "Alta"
+        ? "priority-high"
+        : task.priority === "Média"
+        ? "priority-medium"
+        : "priority-low";
+
+    li.className = `${priorityClass} ${task.done ? "done" : ""}`;
 
     li.innerHTML = `
       <div class="task-top">
-        <span class="${task.done ? 'done' : ''}">${task.text}</span>
-        <span class="priority ${task.priority}">${task.priority}</span>
+        <strong>${task.text}</strong>
+        <div class="actions">
+          <button class="done-btn" onclick="toggleDone(${index})">
+            ✔
+          </button>
+          <button class="delete-btn" onclick="deleteTask(${index})">
+            ✖
+          </button>
+        </div>
       </div>
-
-      <small>${task.date ? "📅 " + task.date : ""}</small>
-
-      <div class="actions">
-        <button onclick="toggleTask(${index})">✓</button>
-        <button onclick="deleteTask(${index})">✕</button>
-      </div>
+      <small>${task.priority} • ${task.dueDate || "sem data"}</small>
     `;
 
     taskList.appendChild(li);
   });
 }
 
-/* ===== PARALLAX REAL ===== */
-const layers = document.querySelectorAll(".layer");
+function toggleDone(index) {
+  tasks[index].done = !tasks[index].done;
+  saveTasks();
+  renderTasks();
+}
 
-window.addEventListener("mousemove", e => {
-  const x = (window.innerWidth / 2 - e.clientX) / 25;
-  const y = (window.innerHeight / 2 - e.clientY) / 25;
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  saveTasks();
+  renderTasks();
+}
 
-  layers.forEach((layer, i) => {
-    const depth = (i + 1) * 8;
-    layer.style.transform = `translate(${x / depth}px, ${y / depth}px)`;
-  });
-});
+// 🗑 LIMPAR TUDO
+function clearAllTasks() {
+  if (!tasks.length) return;
 
+  const confirmClear = confirm("Tem certeza que deseja apagar todas as tarefas?");
+  if (!confirmClear) return;
+
+  tasks = [];
+  saveTasks();
+  renderTasks();
+}
+
+// 💾 STORAGE
+function saveTasks() {
+  localStorage.setItem("taskflow_tasks", JSON.stringify(tasks));
+}
+
+function loadTasksFromStorage() {
+  const data = localStorage.getItem("taskflow_tasks");
+  if (data) tasks = JSON.parse(data);
+}
