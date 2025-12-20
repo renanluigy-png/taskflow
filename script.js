@@ -1,79 +1,48 @@
-document.addEventListener("DOMContentLoaded", function () {
+const taskInput = document.getElementById("taskInput");
+const prioritySelect = document.getElementById("priority");
+const taskList = document.getElementById("taskList");
+const addBtn = document.getElementById("addBtn");
 
-    const taskInput = document.getElementById("taskInput");
-    const prioritySelect = document.getElementById("priority");
-    const taskList = document.getElementById("taskList");
-    const addBtn = document.getElementById("addBtn");
+if (!taskInput || !prioritySelect || !taskList || !addBtn) {
+    alert("Erro: elementos não encontrados no HTML");
+}
 
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let tasks = [];
 
-    function saveTasks() {
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
+function renderTasks() {
+    taskList.innerHTML = "";
 
-    function renderTasks() {
-        taskList.innerHTML = "";
+    tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+        li.textContent = task.text + " (" + task.priority + ")";
 
-        tasks.forEach((task, index) => {
-            const li = document.createElement("li");
-            li.className = "task-item";
+        const btn = document.createElement("button");
+        btn.textContent = "X";
+        btn.onclick = () => {
+            tasks.splice(index, 1);
+            renderTasks();
+        };
 
-            const textSpan = document.createElement("span");
-            textSpan.textContent = task.text;
-
-            const prioritySpan = document.createElement("span");
-            prioritySpan.textContent = task.priority;
-            prioritySpan.className = `priority ${task.priority}`;
-
-            const removeBtn = document.createElement("button");
-            removeBtn.textContent = "✖";
-            removeBtn.addEventListener("click", () => {
-                removeTask(index);
-            });
-
-            li.appendChild(textSpan);
-            li.appendChild(prioritySpan);
-            li.appendChild(removeBtn);
-
-            taskList.appendChild(li);
-        });
-    }
-
-    function addTask() {
-        const text = taskInput.value.trim();
-        const priority = prioritySelect.value;
-
-        if (text === "") {
-            alert("Digite uma tarefa");
-            return;
-        }
-
-        const exists = tasks.some(task => task.text === text);
-        if (exists) {
-            alert("Essa tarefa já existe!");
-            return;
-        }
-
-        tasks.push({ text, priority });
-        saveTasks();
-        renderTasks();
-
-        taskInput.value = "";
-    }
-
-    function removeTask(index) {
-        tasks.splice(index, 1);
-        saveTasks();
-        renderTasks();
-    }
-
-    addBtn.addEventListener("click", addTask);
-
-    taskInput.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-            addTask();
-        }
+        li.appendChild(btn);
+        taskList.appendChild(li);
     });
+}
 
+function addTask() {
+    alert("Função addTask chamada");
+
+    const text = taskInput.value.trim();
+    const priority = prioritySelect.value;
+
+    if (text === "") {
+        alert("Digite algo");
+        return;
+    }
+
+    tasks.push({ text, priority });
     renderTasks();
-});
+
+    taskInput.value = "";
+}
+
+addBtn.onclick = addTask;
