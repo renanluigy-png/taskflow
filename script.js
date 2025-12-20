@@ -14,8 +14,8 @@ function addTask() {
 
   const task = {
     text: input.value,
-    priority: priority,
-    date: date,
+    priority,
+    date,
     done: false
   };
 
@@ -37,13 +37,8 @@ function loadTasks() {
 
   const filter = document.getElementById("filter").value;
 
-  if (filter === "pending") {
-    tasks = tasks.filter(task => !task.done);
-  }
-
-  if (filter === "done") {
-    tasks = tasks.filter(task => task.done);
-  }
+  if (filter === "pending") tasks = tasks.filter(t => !t.done);
+  if (filter === "done") tasks = tasks.filter(t => t.done);
 
   tasks.forEach((task, index) => {
     const li = document.createElement("li");
@@ -56,7 +51,7 @@ function loadTasks() {
         </span>
       </div>
       <small>${task.date ? "📅 " + task.date : ""}</small>
-      <button class="delete" onclick="deleteTask(${index})">✖</button>
+      <button class="delete">✖</button>
     `;
 
     if (task.done) {
@@ -64,7 +59,13 @@ function loadTasks() {
       li.style.opacity = "0.6";
     }
 
-    li.onclick = () => toggleDone(index);
+    li.addEventListener("click", () => toggleDone(index));
+
+    li.querySelector(".delete").addEventListener("click", (e) => {
+      e.stopPropagation();
+      deleteTask(index);
+    });
+
     taskList.appendChild(li);
   });
 }
