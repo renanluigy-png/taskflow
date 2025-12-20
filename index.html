@@ -11,14 +11,22 @@
     <h1>TaskFlow</h1>
 
     <input type="text" id="taskInput" placeholder="Digite uma tarefa">
-    
+
     <select id="priority">
       <option value="Alta">Alta</option>
       <option value="Média">Média</option>
       <option value="Baixa">Baixa</option>
     </select>
 
+    <input type="date" id="dueDate">
+
     <button onclick="addTask()">Adicionar</button>
+
+    <select id="filter" onchange="loadTasks()">
+      <option value="all">Todas</option>
+      <option value="pending">Pendentes</option>
+      <option value="done">Concluídas</option>
+    </select>
 
     <ul id="taskList"></ul>
   </div>
