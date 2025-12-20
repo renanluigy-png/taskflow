@@ -7,49 +7,40 @@
 </head>
 <body>
 
-  <!-- FUNDO PARALLAX -->
+  <!-- PARALLAX BACKGROUND -->
   <div class="parallax">
-    <span class="layer layer-1"></span>
-    <span class="layer layer-2"></span>
-    <span class="layer layer-3"></span>
+    <div class="layer layer-back"></div>
+    <div class="layer layer-mid"></div>
+    <div class="layer layer-front"></div>
   </div>
 
-  <!-- APP -->
-  <div class="app">
+  <header>
+    <h1>TaskFlow</h1>
+  </header>
 
-    <header class="app-header">
-      <h1>TaskFlow</h1>
-    </header>
+  <main class="container">
+    <input type="text" id="taskInput" placeholder="Digite uma tarefa">
 
-    <main class="app-content">
-      <div class="container">
+    <div class="row">
+      <select id="priority">
+        <option value="Alta">Alta</option>
+        <option value="Média">Média</option>
+        <option value="Baixa">Baixa</option>
+      </select>
 
-        <input type="text" id="taskInput" placeholder="Digite uma tarefa">
+      <input type="date" id="dueDate">
+    </div>
 
-        <div class="row">
-          <select id="priority">
-            <option value="Alta">Alta</option>
-            <option value="Média">Média</option>
-            <option value="Baixa">Baixa</option>
-          </select>
+    <button class="add" onclick="addTask()">Adicionar</button>
 
-          <input type="date" id="dueDate">
-        </div>
+    <select id="filter" onchange="loadTasks()">
+      <option value="all">Todas</option>
+      <option value="pending">Pendentes</option>
+      <option value="done">Concluídas</option>
+    </select>
 
-        <button onclick="addTask()">Adicionar</button>
-
-        <select id="filter" onchange="loadTasks()">
-          <option value="all">Todas</option>
-          <option value="pending">Pendentes</option>
-          <option value="done">Concluídas</option>
-        </select>
-
-        <ul id="taskList"></ul>
-
-      </div>
-    </main>
-
-  </div>
+    <ul id="taskList"></ul>
+  </main>
 
   <script src="script.js"></script>
 </body>
