@@ -7,15 +7,13 @@
 </head>
 <body>
 
-  <!-- FUNDO PARALLAX -->
   <div class="parallax">
-    <div class="layer layer-back"></div>
-    <div class="layer layer-mid"></div>
-    <div class="layer layer-front"></div>
+    <div class="parallax-layer"></div>
   </div>
 
   <header>
     <h1>TaskFlow</h1>
+    <span>Organize suas tarefas</span>
   </header>
 
   <main class="container">
@@ -23,26 +21,42 @@
 
     <div class="row">
       <select id="priority">
-        <option value="Alta">Alta</option>
-        <option value="Média">Média</option>
-        <option value="Baixa">Baixa</option>
+        <option value="Alta">Alta prioridade</option>
+        <option value="Média">Média prioridade</option>
+        <option value="Baixa">Baixa prioridade</option>
       </select>
 
       <input type="date" id="dueDate">
     </div>
 
-    <button class="add" onclick="addTask()">Adicionar</button>
+    <button class="add" onclick="addTask()">Adicionar tarefa</button>
 
-    <select id="filter" onchange="loadTasks()">
-      <option value="all">Todas</option>
-      <option value="pending">Pendentes</option>
-      <option value="done">Concluídas</option>
-    </select>
+    <!-- NOVO BOTÃO -->
+    <button class="clear" onclick="clearAllTasks()">Limpar tudo</button>
 
     <ul id="taskList"></ul>
   </main>
 
   <script src="script.js"></script>
+
+  <!-- PARALLAX SUAVE -->
+  <script>
+    const layer = document.querySelector(".parallax-layer");
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+
+    document.addEventListener("mousemove", e => {
+      tx = (window.innerWidth / 2 - e.clientX) / 40;
+      ty = (window.innerHeight / 2 - e.clientY) / 40;
+    });
+
+    function animate() {
+      cx += (tx - cx) * 0.08;
+      cy += (ty - cy) * 0.08;
+      layer.style.transform = `translate(${cx}px, ${cy}px) scale(1.08)`;
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+
 </body>
 </html>
-
