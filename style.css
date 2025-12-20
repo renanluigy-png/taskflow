@@ -1,8 +1,8 @@
 * {
-  box-sizing: border-box;
-  font-family: "Segoe UI", Arial, sans-serif;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
 }
 
 html, body {
@@ -10,14 +10,14 @@ html, body {
   height: 100%;
 }
 
-/* APP FULLSCREEN */
 body {
   background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: #f1f1f1;
+  color: #fff;
 }
 
+/* APP */
 .app {
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -28,7 +28,7 @@ body {
   font-size: 24px;
   font-weight: bold;
   color: #4cafef;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.15);
 }
 
 /* CONTEÚDO */
@@ -39,16 +39,16 @@ body {
   padding: 40px 20px;
 }
 
-/* PAINEL */
+/* ÁREA DAS TAREFAS */
 .container {
   width: 100%;
-  max-width: 500px;
+  max-width: 520px;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-/* INPUTS */
+/* FORM */
 input, select, button {
   padding: 12px;
   border-radius: 8px;
@@ -61,17 +61,6 @@ input, select {
   color: #fff;
 }
 
-input:focus, select:focus {
-  outline: 2px solid #4cafef;
-}
-
-/* LINHA */
-.row {
-  display: flex;
-  gap: 10px;
-}
-
-/* BOTÃO */
 button {
   background: #4cafef;
   font-weight: bold;
@@ -93,54 +82,9 @@ li {
   padding: 12px;
   border-radius: 10px;
   margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  cursor: pointer;
 }
 
-.task-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.task-text {
-  flex: 1;
-}
-
-/* PRIORIDADES */
-.priority {
-  font-size: 12px;
-  font-weight: bold;
-  padding: 4px 8px;
-  border-radius: 6px;
-}
-
+/* PRIORIDADE */
 .priority.alta { background: #ff5252; }
 .priority.media { background: #ffca28; color: #000; }
 .priority.baixa { background: #4caf50; }
-
-/* DATA */
-small {
-  color: #ccc;
-  font-size: 12px;
-}
-
-/* DELETE */
-.delete {
-  background: none;
-  border: none;
-  color: #ff5c5c;
-  font-size: 18px;
-  cursor: pointer;
-  align-self: flex-end;
-}
-
-/* RESPONSIVO */
-@media (max-width: 480px) {
-  .row {
-    flex-direction: column;
-  }
-}
-
