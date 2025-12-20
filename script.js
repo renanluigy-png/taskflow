@@ -1,34 +1,62 @@
 const taskInput = document.getElementById("taskInput");
 const prioritySelect = document.getElementById("priority");
 const taskList = document.getElementById("taskList");
-const addBtn = document.getElementById("addBtn");
 
-addBtn.addEventListener("click", addTask);
+function loadTasks() {
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    taskList.innerHTML = "";
+
+    tasks.forEach((task, index) => {
+        createTaskElement(task.text, task.priority, index);
+    });
+}
+
+function saveTasks(tasks) {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 function addTask() {
-    const taskText = taskInput.value.trim();
+    const text = taskInput.value.trim();
     const priority = prioritySelect.value;
 
-    if (taskText === "") return;
+    if (text === "") return;
 
-    const li = document.createElement("li");
-    li.classList.add("task-item");
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.push({ text, priority });
+    saveTasks(tasks);
 
-    const spanText = document.createElement("span");
-    spanText.textContent = taskText;
-
-    const spanPriority = document.createElement("span");
-    spanPriority.textContent = priority;
-    spanPriority.classList.add("priority");
-
-    if (priority === "Alta") spanPriority.classList.add("alta");
-    if (priority === "Média") spanPriority.classList.add("média");
-    if (priority === "Baixa") spanPriority.classList.add("baixa");
-
-    li.appendChild(spanText);
-    li.appendChild(spanPriority);
-
-    taskList.appendChild(li);
+    createTaskElement(text, priority, tasks.length - 1);
 
     taskInput.value = "";
 }
+
+function removeTask(index) {
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.splice(index, 1);
+    saveTasks(tasks);
+    loadTasks();
+}
+
+function createTaskElement(text, priority, index) {
+    const li = document.createElement("li");
+    li.className = "task-item";
+
+    const spanText = document.createElement("span");
+    spanText.textContent = text;
+
+    const spanPriority = document.createElement("span");
+    spanPriority.textContent = priority;
+    spanPriority.className = `priority ${priority}`;
+
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "✖";
+    removeBtn.onclick = () => removeTask(index);
+
+    li.appendChild(spanText);
+    li.appendChild(spanPriority);
+    li.appendChild(removeBtn);
+
+    taskList.appendChild(li);
+}
+
+loadTasks();
