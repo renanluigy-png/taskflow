@@ -36,7 +36,6 @@ function loadTasks() {
   let tasks = getTasks();
 
   const filter = document.getElementById("filter").value;
-
   if (filter === "pending") tasks = tasks.filter(t => !t.done);
   if (filter === "done") tasks = tasks.filter(t => t.done);
 
@@ -53,6 +52,8 @@ function loadTasks() {
       <small>${task.date ? "📅 " + task.date : ""}</small>
       <button class="delete">✖</button>
     `;
+
+    li.style.animation = "taskIn 0.4s ease";
 
     if (task.done) {
       li.style.textDecoration = "line-through";
