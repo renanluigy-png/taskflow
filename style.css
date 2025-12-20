@@ -10,8 +10,13 @@ html, body {
   height: 100%;
 }
 
+/* FUNDO VIVO (MONTFORT STYLE) */
 body {
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background:
+    radial-gradient(circle at 30% 20%, rgba(76,175,239,0.18), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(34,197,94,0.14), transparent 45%),
+    linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background-attachment: fixed;
   color: #fff;
 }
 
@@ -22,13 +27,15 @@ body {
   flex-direction: column;
 }
 
-/* HEADER */
+/* HEADER HERO */
 .app-header {
-  padding: 20px 40px;
-  font-size: 24px;
-  font-weight: bold;
+  padding: 30px 60px;
+  font-size: 26px;
+  letter-spacing: 1px;
   color: #4cafef;
-  border-bottom: 1px solid rgba(255,255,255,0.15);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0));
+  backdrop-filter: blur(6px);
+  animation: fadeDown 1s ease;
 }
 
 /* CONTEÚDO */
@@ -36,39 +43,56 @@ body {
   flex: 1;
   display: flex;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 60px 20px;
 }
 
-/* ÁREA DAS TAREFAS */
+/* CONTAINER */
 .container {
   width: 100%;
   max-width: 520px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  animation: floatIn 1.2s ease forwards;
 }
 
-/* FORM */
+/* INPUTS */
 input, select, button {
-  padding: 12px;
-  border-radius: 8px;
+  padding: 14px;
+  border-radius: 10px;
   border: none;
   font-size: 14px;
 }
 
 input, select {
-  background: #1e1e1e;
+  background: rgba(30,30,30,0.85);
   color: #fff;
+  transition: all 0.3s ease;
 }
 
+input:focus, select:focus {
+  outline: none;
+  transform: scale(1.02);
+  box-shadow: 0 0 0 2px rgba(76,175,239,0.45);
+}
+
+/* LINHA */
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+/* BOTÃO */
 button {
-  background: #4cafef;
+  background: linear-gradient(135deg, #4cafef, #3a9ad9);
   font-weight: bold;
   cursor: pointer;
+  transition: all 0.25s ease;
 }
 
 button:hover {
-  background: #3a9ad9;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(76,175,239,0.45);
 }
 
 /* LISTA */
@@ -78,13 +102,98 @@ ul {
 }
 
 li {
-  background: #2a2a2a;
-  padding: 12px;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  background: rgba(42,42,42,0.85);
+  padding: 14px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.45);
+}
+
+/* TASK ROW */
+.task-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-text {
+  flex: 1;
 }
 
 /* PRIORIDADE */
+.priority {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
 .priority.alta { background: #ff5252; }
 .priority.media { background: #ffca28; color: #000; }
 .priority.baixa { background: #4caf50; }
+
+/* DATA */
+small {
+  color: #ccc;
+  font-size: 12px;
+}
+
+/* DELETE */
+.delete {
+  background: none;
+  border: none;
+  color: #ff5c5c;
+  font-size: 18px;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+/* ANIMAÇÕES */
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes taskIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVO */
+@media (max-width: 480px) {
+  .row {
+    flex-direction: column;
+  }
+}
