@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
 
     const taskInput = document.getElementById("taskInput");
     const prioritySelect = document.getElementById("priority");
@@ -27,7 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const removeBtn = document.createElement("button");
             removeBtn.textContent = "✖";
-            removeBtn.onclick = () => removeTask(index);
+            removeBtn.addEventListener("click", () => {
+                removeTask(index);
+            });
 
             li.appendChild(textSpan);
             li.appendChild(prioritySpan);
@@ -41,7 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const text = taskInput.value.trim();
         const priority = prioritySelect.value;
 
-        if (text === "") return;
+        if (text === "") {
+            alert("Digite uma tarefa");
+            return;
+        }
 
         const exists = tasks.some(task => task.text === text);
         if (exists) {
@@ -64,8 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     addBtn.addEventListener("click", addTask);
 
-    taskInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") addTask();
+    taskInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            addTask();
+        }
     });
 
     renderTasks();
