@@ -16,11 +16,17 @@ function addTask() {
 
     const li = document.createElement("li");
 
-    li.innerHTML = `
-        <span>${text}</span>
-        <span>[${priority}]</span>
-    `;
+    const prioritySpan = document.createElement("span");
+    prioritySpan.textContent = priority;
+    prioritySpan.classList.add("priority", priority.toLowerCase());
+
+    const textSpan = document.createElement("span");
+    textSpan.textContent = text;
+
+    li.appendChild(textSpan);
+    li.appendChild(prioritySpan);
 
     taskList.appendChild(li);
+
     taskInput.value = "";
 }
