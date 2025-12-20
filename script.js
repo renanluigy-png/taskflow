@@ -1,92 +1,64 @@
-const taskList = document.getElementById("taskList");
-
-window.onload = loadTasks;
+let tasks = [];
 
 function addTask() {
-  const input = document.getElementById("taskInput");
-  const priority = document.getElementById("priority").value;
-  const date = document.getElementById("dueDate").value;
+  const text = taskInput.value.trim();
+  if (!text) return;
 
-  if (input.value.trim() === "") {
-    alert("Digite uma tarefa!");
-    return;
-  }
-
-  const task = {
-    text: input.value,
-    priority,
-    date,
+  tasks.push({
+    text,
+    priority: priority.value,
+    date: dueDate.value,
     done: false
-  };
+  });
 
-  const tasks = getTasks();
-  tasks.push(task);
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-
-  input.value = "";
+  taskInput.value = "";
   loadTasks();
-}
-
-function getTasks() {
-  return JSON.parse(localStorage.getItem("tasks")) || [];
 }
 
 function loadTasks() {
   taskList.innerHTML = "";
-  let tasks = getTasks();
 
-  const filter = document.getElementById("filter").value;
-  if (filter === "pending") tasks = tasks.filter(t => !t.done);
-  if (filter === "done") tasks = tasks.filter(t => t.done);
+  const filterValue = filter.value;
 
   tasks.forEach((task, index) => {
+    if (
+      (filterValue === "pending" && task.done) ||
+      (filterValue === "done" && !task.done)
+    ) return;
+
     const li = document.createElement("li");
 
     li.innerHTML = `
-      <div class="task-row">
-        <span class="task-text">${task.text}</span>
-        <span class="priority ${getPriorityClass(task.priority)}">
-          ${task.priority}
-        </span>
-      </div>
-      <small>${task.date ? "📅 " + task.date : ""}</small>
-      <button class="delete">✖</button>
+      <strong>${task.text}</strong>
+      <span class="priority ${task.priority}">${task.priority}</span>
+      <small>${task.date || ""}</small>
+      <button onclick="toggleTask(${index})">✔</button>
+      <button onclick="deleteTask(${index})">✖</button>
     `;
-
-    li.style.animation = "taskIn 0.4s ease";
-
-    if (task.done) {
-      li.style.textDecoration = "line-through";
-      li.style.opacity = "0.6";
-    }
-
-    li.addEventListener("click", () => toggleDone(index));
-
-    li.querySelector(".delete").addEventListener("click", (e) => {
-      e.stopPropagation();
-      deleteTask(index);
-    });
 
     taskList.appendChild(li);
   });
 }
 
-function toggleDone(index) {
-  const tasks = getTasks();
+function toggleTask(index) {
   tasks[index].done = !tasks[index].done;
-  localStorage.setItem("tasks", JSON.stringify(tasks));
   loadTasks();
 }
 
 function deleteTask(index) {
-  const tasks = getTasks();
   tasks.splice(index, 1);
-  localStorage.setItem("tasks", JSON.stringify(tasks));
   loadTasks();
 }
 
-function getPriorityClass(priority) {
-  if (priority === "Alta") return "alta";
-  if (priority === "Média") return "media";
-  return "baixa";
-}
+/* PARALLAX REAL */
+const layers = document.querySelectorAll(".layer");
+
+window.addEventListener("mousemove", (e) => {
+  const x = (window.innerWidth / 2 - e.clientX) / 30;
+  const y = (window.innerHeight / 2 - e.clientY) / 30;
+
+  layers.forEach((layer, i) => {
+    const depth = (i + 1) * 8;
+    layer.style.transform = `translate(${x / depth}px, ${y / depth}px)`;
+  });
+});
