@@ -83,3 +83,24 @@ li button {
     font-size: 18px;
     cursor: pointer;
 }
+.priority {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.alta {
+    background-color: #ff5252;
+    color: #fff;
+}
+
+.média {
+    background-color: #ffca28;
+    color: #000;
+}
+
+.baixa {
+    background-color: #66bb6a;
+    color: #000;
+}
