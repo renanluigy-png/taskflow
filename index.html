@@ -4,28 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskFlow</title>
-
-    <!-- CSS correto -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <h1>TaskFlow</h1>
+<div class="container">
+    <h1>TaskFlow</h1>
 
-        <input type="text" id="taskInput" placeholder="Digite uma tarefa">
+    <input type="text" id="taskInput" placeholder="Digite uma tarefa">
 
-        <select id="priority">
-            <option value="Alta">Alta</option>
-            <option value="Média">Média</option>
-            <option value="Baixa">Baixa</option>
-        </select>
+    <select id="priority">
+        <option value="Alta">Alta</option>
+        <option value="Média">Média</option>
+        <option value="Baixa">Baixa</option>
+    </select>
 
-        <button onclick="addTask()">Adicionar</button>
+    <input type="date" id="dueDate">
 
-        <ul id="taskList"></ul>
-    </div>
+    <button id="addBtn">Adicionar</button>
 
-    <script src="script.js"></script>
+    <select id="filter">
+        <option value="all">Todas</option>
+        <option value="pending">Pendentes</option>
+        <option value="done">Concluídas</option>
+    </select>
+
+    <ul id="taskList"></ul>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
