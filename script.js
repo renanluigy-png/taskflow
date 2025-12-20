@@ -1,64 +1,85 @@
-let tasks = [];
+const taskList = document.getElementById("taskList");
+const taskInput = document.getElementById("taskInput");
+const priority = document.getElementById("priority");
+const dueDate = document.getElementById("dueDate");
+const filter = document.getElementById("filter");
+
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+loadTasks();
 
 function addTask() {
-  const text = taskInput.value.trim();
-  if (!text) return;
+  if (!taskInput.value.trim()) return;
 
   tasks.push({
-    text,
+    text: taskInput.value,
     priority: priority.value,
     date: dueDate.value,
     done: false
   });
 
   taskInput.value = "";
+  save();
+}
+
+function toggleTask(index) {
+  tasks[index].done = !tasks[index].done;
+  save();
+}
+
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  save();
+}
+
+function save() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
   loadTasks();
 }
 
 function loadTasks() {
   taskList.innerHTML = "";
 
-  const filterValue = filter.value;
+  let filtered = tasks;
 
-  tasks.forEach((task, index) => {
-    if (
-      (filterValue === "pending" && task.done) ||
-      (filterValue === "done" && !task.done)
-    ) return;
+  if (filter.value === "pending") {
+    filtered = tasks.filter(t => !t.done);
+  }
+  if (filter.value === "done") {
+    filtered = tasks.filter(t => t.done);
+  }
 
+  filtered.forEach((task, index) => {
     const li = document.createElement("li");
 
     li.innerHTML = `
-      <strong>${task.text}</strong>
-      <span class="priority ${task.priority}">${task.priority}</span>
-      <small>${task.date || ""}</small>
-      <button onclick="toggleTask(${index})">✔</button>
-      <button onclick="deleteTask(${index})">✖</button>
+      <div class="task-top">
+        <span class="${task.done ? 'done' : ''}">${task.text}</span>
+        <span class="priority ${task.priority}">${task.priority}</span>
+      </div>
+
+      <small>${task.date ? "📅 " + task.date : ""}</small>
+
+      <div class="actions">
+        <button onclick="toggleTask(${index})">✔</button>
+        <button onclick="deleteTask(${index})">✖</button>
+      </div>
     `;
 
     taskList.appendChild(li);
   });
 }
 
-function toggleTask(index) {
-  tasks[index].done = !tasks[index].done;
-  loadTasks();
-}
-
-function deleteTask(index) {
-  tasks.splice(index, 1);
-  loadTasks();
-}
-
 /* PARALLAX REAL */
 const layers = document.querySelectorAll(".layer");
 
-window.addEventListener("mousemove", (e) => {
-  const x = (window.innerWidth / 2 - e.clientX) / 30;
-  const y = (window.innerHeight / 2 - e.clientY) / 30;
+window.addEventListener("mousemove", e => {
+  const x = (window.innerWidth / 2 - e.clientX) / 20;
+  const y = (window.innerHeight / 2 - e.clientY) / 20;
 
   layers.forEach((layer, i) => {
-    const depth = (i + 1) * 8;
+    const depth = (i + 1) * 10;
     layer.style.transform = `translate(${x / depth}px, ${y / depth}px)`;
   });
 });
+
