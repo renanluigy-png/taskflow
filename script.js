@@ -61,8 +61,8 @@ function loadTasks() {
       <small>${task.date ? "📅 " + task.date : ""}</small>
 
       <div class="actions">
-        <button onclick="toggleTask(${index})">✔</button>
-        <button onclick="deleteTask(${index})">✖</button>
+        <button onclick="toggleTask(${index})">✓</button>
+        <button onclick="deleteTask(${index})">✕</button>
       </div>
     `;
 
@@ -70,15 +70,15 @@ function loadTasks() {
   });
 }
 
-/* PARALLAX REAL */
+/* ===== PARALLAX REAL ===== */
 const layers = document.querySelectorAll(".layer");
 
 window.addEventListener("mousemove", e => {
-  const x = (window.innerWidth / 2 - e.clientX) / 20;
-  const y = (window.innerHeight / 2 - e.clientY) / 20;
+  const x = (window.innerWidth / 2 - e.clientX) / 25;
+  const y = (window.innerHeight / 2 - e.clientY) / 25;
 
   layers.forEach((layer, i) => {
-    const depth = (i + 1) * 10;
+    const depth = (i + 1) * 8;
     layer.style.transform = `translate(${x / depth}px, ${y / depth}px)`;
   });
 });
