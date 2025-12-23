@@ -19,6 +19,11 @@ function addTask() {
   const text = taskInput.value.trim();
   if (!text) return;
 
+  // PERMISSÃO DE NOTIFICAÇÃO (GESTO HUMANO - MOBILE)
+  if ("Notification" in window && Notification.permission !== "granted") {
+    Notification.requestPermission();
+  }
+
   tasks.push({
     text,
     priority: prioritySelect.value,
@@ -162,6 +167,7 @@ function loadTasksFromStorage() {
   const data = localStorage.getItem("taskflow_tasks");
   if (data) tasks = JSON.parse(data);
 }
+
 let deferredPrompt;
 
 window.addEventListener("beforeinstallprompt", e => {
