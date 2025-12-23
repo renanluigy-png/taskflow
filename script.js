@@ -19,10 +19,6 @@ function addTask() {
   const text = taskInput.value.trim();
   if (!text) return;
 
-  if ("Notification" in window && Notification.permission !== "granted") {
-    Notification.requestPermission();
-  }
-
   tasks.push({
     text,
     priority: prioritySelect.value,
@@ -55,29 +51,24 @@ function renderTasks() {
 
     li.className = `${priorityClass} ${task.done ? "done" : ""}`;
 
+    // feedback visual ao adicionar nova tarefa
+    if (index === tasks.length - 1 && !task.done) {
+      li.classList.add("added");
+    }
+
     li.innerHTML = `
       <div class="task-top">
         <strong>${task.text}</strong>
-
         <div class="actions">
-          <button class="done-btn" onclick="toggleDone(${index})" aria-label="Concluir tarefa">
-            <svg viewBox="0 0 24 24" class="icon">
-              <path d="M20 6L9 17l-5-5" />
-            </svg>
-          </button>
-
-          <button class="delete-btn" onclick="deleteTask(${index})" aria-label="Excluir tarefa">
-            <svg viewBox="0 0 24 24" class="icon">
-              <path d="M18 6L6 18M6 6l12 12" />
-            </svg>
-          </button>
+          <button class="done-btn" onclick="toggleDone(${index})">✔</button>
+          <button class="delete-btn" onclick="deleteTask(${index})">✖</button>
         </div>
       </div>
 
       <small>
         ${task.priority}
-        ${task.dueDate ? " • Data: " + task.dueDate : ""}
-        ${task.dueTime ? " • Hora: " + task.dueTime : ""}
+        ${task.dueDate ? " • 📅 " + task.dueDate : ""}
+        ${task.dueTime ? " • ⏰ " + task.dueTime : ""}
       </small>
     `;
 
@@ -85,17 +76,34 @@ function renderTasks() {
   });
 }
 
+// ================= FEEDBACK APPLE-LIKE AO CONCLUIR =================
 function toggleDone(index) {
   tasks[index].done = !tasks[index].done;
   saveTasks();
   renderTasks();
+
+  // micro feedback visual (apple-like)
+  const item = taskList.children[index];
+  if (item) {
+    item.classList.add("just-done");
+    setTimeout(() => item.classList.remove("just-done"), 300);
+  }
 }
 
 function deleteTask(index) {
-  tasks.splice(index, 1);
-  saveTasks();
-  renderTasks();
+  const item = taskList.children[index];
+  if (!item) return;
+
+  // feedback visual apple-like
+  item.classList.add("removing");
+
+  setTimeout(() => {
+    tasks.splice(index, 1);
+    saveTasks();
+    renderTasks();
+  }, 250);
 }
+
 
 function clearAllTasks() {
   if (!tasks.length) return;
@@ -136,7 +144,7 @@ function checkNotifications() {
 function fireNotification(text) {
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.ready.then(reg => {
-      reg.showNotification("TaskFlow", {
+      reg.showNotification("⏰ TaskFlow", {
         body: text,
         tag: "taskflow-reminder",
         vibrate: [100, 50, 100]
@@ -195,4 +203,10 @@ window.addEventListener("beforeinstallprompt", e => {
     await deferredPrompt.userChoice;
     deferredPrompt = null;
   });
+});
+// ================= ACESSIBILIDADE: TECLADO =================
+taskInput.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    addTask();
+  }
 });
