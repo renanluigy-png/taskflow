@@ -116,3 +116,7 @@ Organização por data
 
 Renan Luigy
 Dev iniciante em desenvolvimento web 🚀
+
+⚠️ Observação:
+As notificações funcionam apenas quando o aplicativo é instalado como PWA.
+Em dispositivos iOS, notificações não são suportadas em sites abertos diretamente pelo navegador.
