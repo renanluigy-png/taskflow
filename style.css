@@ -11,7 +11,7 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ===== PARALLAX ===== */
+/* ================= PARALLAX ================= */
 .parallax {
   position: fixed;
   inset: 0;
@@ -28,7 +28,7 @@ html, body {
   will-change: transform;
 }
 
-/* ESCURECE FUNDO */
+/* Overlay */
 body::before {
   content: "";
   position: fixed;
@@ -37,16 +37,17 @@ body::before {
   z-index: -2;
 }
 
-/* ===== HEADER ===== */
+/* ================= HEADER ================= */
 header {
-  position: absolute;
-  top: 30px;
-  left: 40px;
+  position: fixed;
+  top: 24px;
+  left: 32px;
   color: #fff;
+  z-index: 2;
 }
 
 header h1 {
-  font-size: 28px;
+  font-size: 26px;
 }
 
 header span {
@@ -54,28 +55,32 @@ header span {
   opacity: 0.8;
 }
 
-/* ===== CONTAINER ===== */
+/* ================= CONTAINER ================= */
 .container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 360px;
-  padding: 28px;
+  max-width: calc(100% - 32px);
+  padding: 26px;
   border-radius: 22px;
+
   background: rgba(255,255,255,0.18);
   backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
   box-shadow: 0 30px 60px rgba(0,0,0,0.35);
   animation: fadeIn 0.6s ease;
 }
 
-/* ENTRADA */
+/* Entrada */
 @keyframes fadeIn {
   from { opacity: 0; transform: translate(-50%, -55%); }
   to { opacity: 1; transform: translate(-50%, -50%); }
 }
 
-/* INPUTS */
+/* ================= INPUTS ================= */
 input, select {
   width: 100%;
   padding: 12px 14px;
@@ -83,15 +88,17 @@ input, select {
   border: none;
   border-radius: 12px;
   outline: none;
+  background: rgba(255,255,255,0.9);
+  font-size: 14px;
 }
 
-/* ROW */
+/* Linha */
 .row {
   display: flex;
   gap: 10px;
 }
 
-/* BOTÃO ADD */
+/* ================= BOTÕES ================= */
 button.add {
   width: 100%;
   margin-top: 16px;
@@ -106,16 +113,29 @@ button.add {
 
 button.add:active {
   transform: scale(0.96);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
 }
 
-/* LISTA */
+button.clear {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff8a80, #e57373);
+  color: #fff;
+  cursor: pointer;
+}
+
+button.clear:active {
+  transform: scale(0.96);
+}
+
+/* ================= LISTA ================= */
 #taskList {
   list-style: none;
   margin-top: 18px;
 }
 
-/* ITEM */
 #taskList li {
   background: rgba(255,255,255,0.92);
   padding: 14px;
@@ -125,22 +145,22 @@ button.add:active {
   animation: pop 0.25s ease;
 }
 
-/* POP */
 @keyframes pop {
-  0% { transform: scale(0.95); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
-/* PRIORIDADE */
+/* ================= PRIORIDADE ================= */
 .priority-high { border-left: 6px solid #e57373; }
 .priority-medium { border-left: 6px solid #ffd54f; }
 .priority-low { border-left: 6px solid #81c784; }
 
-/* AÇÕES */
+/* ================= AÇÕES ================= */
 .task-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
 }
 
 .actions {
@@ -158,40 +178,176 @@ button.add:active {
   align-items: center;
   justify-content: center;
   color: #fff;
-  transition: transform 0.15s ease;
-}
-
-.actions button:active {
-  transform: scale(0.88);
 }
 
 .done-btn { background: #4caf50; }
 .delete-btn { background: #e57373; }
 
-/* CONCLUÍDA */
+/* ================= CONCLUÍDA ================= */
 #taskList li.done {
   opacity: 0.55;
   text-decoration: line-through;
-  animation: donePulse 0.3s ease;
 }
 
-@keyframes donePulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.03); }
-  100% { transform: scale(1); }
+/* ================================================= */
+/* ================= MOBILE AJUSTES ================= */
+/* ================================================= */
+@media (max-width: 600px) {
+
+  header {
+    top: 16px;
+    left: 16px;
+  }
+
+  header h1 {
+    font-size: 22px;
+  }
+
+  .container {
+    top: auto;
+    bottom: 20px;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 100%;
+    border-radius: 22px 22px 0 0;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  input, select {
+    font-size: 16px;
+  }
+
+  /* Parallax mais leve no mobile */
+  .parallax-layer {
+    inset: -5%;
+  }
 }
-button.clear {
-  width: 100%;
-  margin-top: 10px;
-  padding: 12px;
-  border: none;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #ff8a80, #e57373);
+/* ===== BOTÃO INSTALAR APP (PWA) ===== */
+.install-btn {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
   color: #fff;
+  border: none;
+  padding: 14px;
+  border-radius: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transition: transform 0.15s ease;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.25);
+  transition: transform .2s, box-shadow .2s;
 }
 
-button.clear:active {
-  transform: scale(0.95);
+.install-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.35);
 }
+/* ===== ANIMAÇÃO DE CLIQUE (APPLE-LIKE) ===== */
+.install-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+/* efeito de pressionar */
+.install-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 6px 14px rgba(0,0,0,.25);
+}
+
+/* ripple */
+.install-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,.35) 10%, transparent 11%);
+  background-size: 200% 200%;
+  opacity: 0;
+  transition: opacity .4s;
+}
+
+.install-btn:active::after {
+  opacity: 1;
+  background-position: center;
+}
+/* ===== MICRO-ANIMAÇÕES PREMIUM (APPLE-LIKE) ===== */
+
+/* todos os botões principais */
+button {
+  position: relative;
+  overflow: hidden;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+/* pressionar */
+button:active {
+  transform: scale(0.97);
+  box-shadow: 0 6px 14px rgba(0,0,0,.25);
+}
+
+/* ripple suave */
+button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,.35) 10%, transparent 11%);
+  background-size: 200% 200%;
+  opacity: 0;
+  transition: opacity .4s;
+  pointer-events: none;
+}
+
+button:active::after {
+  opacity: 1;
+  background-position: center;
+}
+
+/* botões pequenos (concluir / excluir) */
+.done-btn,
+.delete-btn {
+  border-radius: 50%;
+}
+
+/* hover elegante (desktop) */
+@media (hover: hover) {
+  button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(0,0,0,.25);
+  }
+}
+/* ===== ANIMAÇÃO AO CONCLUIR TAREFA (APPLE-LIKE) ===== */
+
+li {
+  transition: background .3s ease, transform .25s ease;
+}
+
+/* estado concluído */
+li.done {
+  opacity: 0.7;
+  transform: scale(0.98);
+}
+
+/* texto da tarefa */
+li.done strong {
+  text-decoration: line-through;
+  color: rgba(255,255,255,0.6);
+  animation: taskComplete .35s ease;
+}
+
+/* data / hora */
+li.done small {
+  color: rgba(255,255,255,0.45);
+}
+
+/* animação suave */
+@keyframes taskComplete {
+  from {
+    transform: translateX(-4px);
+    opacity: 0.4;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
