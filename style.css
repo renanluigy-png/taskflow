@@ -225,6 +225,7 @@ button.clear:active {
     inset: -5%;
   }
 }
+
 /* ===== BOTÃO INSTALAR APP (PWA) ===== */
 .install-btn {
   background: linear-gradient(135deg, #2563eb, #1e40af);
@@ -243,19 +244,18 @@ button.clear:active {
   transform: translateY(-2px);
   box-shadow: 0 14px 30px rgba(0,0,0,.35);
 }
+
 /* ===== ANIMAÇÃO DE CLIQUE (APPLE-LIKE) ===== */
 .install-btn {
   position: relative;
   overflow: hidden;
 }
 
-/* efeito de pressionar */
 .install-btn:active {
   transform: scale(0.97);
   box-shadow: 0 6px 14px rgba(0,0,0,.25);
 }
 
-/* ripple */
 .install-btn::after {
   content: "";
   position: absolute;
@@ -270,22 +270,19 @@ button.clear:active {
   opacity: 1;
   background-position: center;
 }
-/* ===== MICRO-ANIMAÇÕES PREMIUM (APPLE-LIKE) ===== */
 
-/* todos os botões principais */
+/* ===== MICRO-ANIMAÇÕES PREMIUM ===== */
 button {
   position: relative;
   overflow: hidden;
   transition: transform .15s ease, box-shadow .15s ease;
 }
 
-/* pressionar */
 button:active {
   transform: scale(0.97);
   box-shadow: 0 6px 14px rgba(0,0,0,.25);
 }
 
-/* ripple suave */
 button::after {
   content: "";
   position: absolute;
@@ -302,44 +299,39 @@ button:active::after {
   background-position: center;
 }
 
-/* botões pequenos (concluir / excluir) */
 .done-btn,
 .delete-btn {
   border-radius: 50%;
 }
 
-/* hover elegante (desktop) */
 @media (hover: hover) {
   button:hover {
     transform: translateY(-1px);
     box-shadow: 0 12px 28px rgba(0,0,0,.25);
   }
 }
-/* ===== ANIMAÇÃO AO CONCLUIR TAREFA (APPLE-LIKE) ===== */
 
+/* ===== ANIMAÇÃO AO CONCLUIR TAREFA ===== */
 li {
   transition: background .3s ease, transform .25s ease;
 }
 
-/* estado concluído */
 li.done {
   opacity: 0.7;
   transform: scale(0.98);
 }
 
-/* texto da tarefa */
 li.done strong {
   text-decoration: line-through;
   color: rgba(255,255,255,0.6);
   animation: taskComplete .35s ease;
 }
 
-/* data / hora */
+/* ✅ CORRIGIDO: data / hora visível no mobile */
 li.done small {
-  color: rgba(255,255,255,0.45);
+  color: rgba(0,0,0,0.45);
 }
 
-/* animação suave */
 @keyframes taskComplete {
   from {
     transform: translateX(-4px);
@@ -350,4 +342,3 @@ li.done small {
     opacity: 1;
   }
 }
-
