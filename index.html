@@ -3,10 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>TaskFlow</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#0f172a">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+  <!-- PARALLAX -->
   <div class="parallax">
     <div class="parallax-layer"></div>
   </div>
@@ -29,9 +35,9 @@
       <input type="date" id="dueDate">
     </div>
 
-    <button class="add" onclick="addTask()">Adicionar tarefa</button>
+    <input type="time" id="dueTime">
 
-    <!-- NOVO BOTÃO -->
+    <button class="add" onclick="addTask()">Adicionar tarefa</button>
     <button class="clear" onclick="clearAllTasks()">Limpar tudo</button>
 
     <ul id="taskList"></ul>
@@ -39,9 +45,17 @@
 
   <script src="script.js"></script>
 
+  <!-- REGISTRA SERVICE WORKER -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js");
+    }
+  </script>
+
   <!-- PARALLAX SUAVE -->
   <script>
     const layer = document.querySelector(".parallax-layer");
+
     let tx = 0, ty = 0, cx = 0, cy = 0;
 
     document.addEventListener("mousemove", e => {
@@ -60,3 +74,4 @@
 
 </body>
 </html>
+
