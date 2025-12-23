@@ -19,7 +19,6 @@ function addTask() {
   const text = taskInput.value.trim();
   if (!text) return;
 
-  // PERMISSÃO DE NOTIFICAÇÃO (GESTO HUMANO - MOBILE)
   if ("Notification" in window && Notification.permission !== "granted") {
     Notification.requestPermission();
   }
@@ -56,19 +55,20 @@ function renderTasks() {
 
     li.className = `${priorityClass} ${task.done ? "done" : ""}`;
 
+    // ⬇️ ALTERAÇÃO AQUI (emoji removido → texto compatível)
     li.innerHTML = `
       <div class="task-top">
         <strong>${task.text}</strong>
         <div class="actions">
-          <button class="done-btn" onclick="toggleDone(${index})">✔</button>
-          <button class="delete-btn" onclick="deleteTask(${index})">✖</button>
+          <button class="done-btn" onclick="toggleDone(${index})" aria-label="Concluir tarefa">OK</button>
+          <button class="delete-btn" onclick="deleteTask(${index})" aria-label="Excluir tarefa">X</button>
         </div>
       </div>
 
       <small>
         ${task.priority}
-        ${task.dueDate ? " • 📅 " + task.dueDate : ""}
-        ${task.dueTime ? " • ⏰ " + task.dueTime : ""}
+        ${task.dueDate ? " • Data: " + task.dueDate : ""}
+        ${task.dueTime ? " • Hora: " + task.dueTime : ""}
       </small>
     `;
 
@@ -127,7 +127,7 @@ function checkNotifications() {
 function fireNotification(text) {
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.ready.then(reg => {
-      reg.showNotification("⏰ TaskFlow", {
+      reg.showNotification("TaskFlow", {
         body: text,
         tag: "taskflow-reminder",
         vibrate: [100, 50, 100]
@@ -168,6 +168,7 @@ function loadTasksFromStorage() {
   if (data) tasks = JSON.parse(data);
 }
 
+// ================= PWA INSTALL =================
 let deferredPrompt;
 
 window.addEventListener("beforeinstallprompt", e => {
