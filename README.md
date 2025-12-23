@@ -117,6 +117,10 @@ Organização por data
 Renan Luigy
 Dev iniciante em desenvolvimento web 🚀
 
-⚠️ Observação:
+⚠️ Observações:
+Os campos de data e hora utilizam componentes nativos do navegador.
+Em dispositivos móveis, os ícones visuais podem não aparecer, pois dependem do sistema operacional.
+
 As notificações funcionam apenas quando o aplicativo é instalado como PWA.
-Em dispositivos iOS, notificações não são suportadas em sites abertos diretamente pelo navegador.
+No iOS, notificações não são suportadas em sites abertos diretamente pelo navegador.
+
