@@ -55,13 +55,22 @@ function renderTasks() {
 
     li.className = `${priorityClass} ${task.done ? "done" : ""}`;
 
-    // ⬇️ ALTERAÇÃO AQUI (emoji removido → texto compatível)
     li.innerHTML = `
       <div class="task-top">
         <strong>${task.text}</strong>
+
         <div class="actions">
-          <button class="done-btn" onclick="toggleDone(${index})" aria-label="Concluir tarefa">OK</button>
-          <button class="delete-btn" onclick="deleteTask(${index})" aria-label="Excluir tarefa">X</button>
+          <button class="done-btn" onclick="toggleDone(${index})" aria-label="Concluir tarefa">
+            <svg viewBox="0 0 24 24" class="icon">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
+          </button>
+
+          <button class="delete-btn" onclick="deleteTask(${index})" aria-label="Excluir tarefa">
+            <svg viewBox="0 0 24 24" class="icon">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
         </div>
       </div>
 
