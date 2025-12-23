@@ -346,3 +346,59 @@ li.done small {
 .actions button:active {
   transform: scale(0.92);
 }
+/* ===== FEEDBACK AO ADICIONAR TAREFA ===== */
+@keyframes taskAdded {
+  0% {
+    transform: scale(0.96) translateY(4px);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.02) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#taskList li.added {
+  animation: taskAdded 0.35s cubic-bezier(.4,0,.2,1);
+}
+/* ===== FEEDBACK AO CONCLUIR TAREFA ===== */
+@keyframes taskDone {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(0.97);
+  }
+  100% {
+    transform: scale(0.98);
+  }
+}
+
+#taskList li.just-done {
+  animation: taskDone 0.25s cubic-bezier(.4,0,.2,1);
+}
+/* ===== FEEDBACK AO EXCLUIR TAREFA ===== */
+@keyframes taskRemove {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(20px) scale(0.95);
+  }
+}
+
+#taskList li.removing {
+  animation: taskRemove 0.25s cubic-bezier(.4,0,.2,1) forwards;
+}
+/* ===== ACESSIBILIDADE: FOCO VISÍVEL ===== */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid rgba(99, 102, 241, 0.9);
+  outline-offset: 2px;
+}
