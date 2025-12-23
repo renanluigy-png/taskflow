@@ -314,3 +314,9 @@ li.done small {
     opacity: 1;
   }
 }
+.done-btn,
+.delete-btn {
+  font-size: 16px;
+  line-height: 1;
+  color: #fff;
+}
